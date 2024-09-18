@@ -2,4 +2,7 @@
     <string name="app_name">Book Reader</string>
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
+    <string name="error_general">Something went wrong, Try again!</string>
+    <string name="try_again">Try Again</string>
+    <string name="books">Books</string>
 </resources>

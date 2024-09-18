@@ -65,5 +65,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.navigation.compose)
 
+    implementation(libs.coil)
+    implementation(libs.coil.compose)
+
     testImplementation(libs.junit)
 }

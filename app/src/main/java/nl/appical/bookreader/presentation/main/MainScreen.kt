@@ -10,12 +10,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.serialization.Serializable
 import nl.appical.bookreader.presentation.designsystem.AppTheme
+import nl.appical.bookreader.presentation.home.HomeScreen
+import nl.appical.bookreader.presentation.home.HomeViewModel
 import nl.appical.bookreader.presentation.main.components.BottomNavigationBar
 import nl.appical.bookreader.presentation.main.models.BottomNavigationTab
 
@@ -59,7 +62,12 @@ fun MainScreen() {
                 startDestination = Home,
                 modifier = Modifier.padding(contentPadding)
             ) {
-                composable<Home> { Text("Home Screen") }
+                composable<Home> {
+                    val viewModel = hiltViewModel<HomeViewModel>()
+                    val uiState by viewModel.uiState
+
+                    HomeScreen(uiState) { viewModel.getBooks() }
+                }
 
                 composable<Favorites> { Text("Fav Screen") }
             }

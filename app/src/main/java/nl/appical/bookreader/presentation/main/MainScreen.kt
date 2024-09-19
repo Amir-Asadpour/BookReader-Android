@@ -66,7 +66,11 @@ fun MainScreen() {
                     val viewModel = hiltViewModel<HomeViewModel>()
                     val uiState by viewModel.uiState
 
-                    HomeScreen(uiState) { viewModel.getBooks() }
+                    HomeScreen(
+                        uiState = uiState,
+                        onLoadContent = viewModel::getBooks,
+                        onSearchQueryChanged = viewModel::onSearchQueryChanged
+                    )
                 }
 
                 composable<Favorites> { Text("Fav Screen") }

@@ -35,8 +35,9 @@ fun BooksListView(modifier: Modifier = Modifier, books: List<UiBook>) {
         contentPadding = PaddingValues(vertical = 12.dp, horizontal = 12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(books) {
+        items(books, key = { it.id }) {
             Card(
+                modifier = Modifier.animateItem(),
                 onClick = {},
                 colors = CardDefaults.cardColors(containerColor = Color.Transparent)
             ) {

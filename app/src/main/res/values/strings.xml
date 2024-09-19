@@ -5,4 +5,6 @@
     <string name="error_general">Something went wrong, Try again!</string>
     <string name="try_again">Try Again</string>
     <string name="books">Books</string>
+    <string name="hint_search">Search books by title or author</string>
+    <string name="msg_no_books_available">No books available!</string>
 </resources>

@@ -5,5 +5,5 @@ import nl.appical.bookreader.presentation.models.UiBook
 sealed class HomeUiState {
     data object Progress : HomeUiState()
     data object TryAgain : HomeUiState()
-    data class Content(val books: List<UiBook>) : HomeUiState()
+    data class Content(val books: List<UiBook>, val searchQuery: String = "") : HomeUiState()
 }

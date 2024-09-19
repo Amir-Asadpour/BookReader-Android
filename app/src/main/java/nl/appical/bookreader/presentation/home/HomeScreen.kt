@@ -25,12 +25,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.appical.bookreader.R
 import nl.appical.bookreader.presentation.designsystem.components.TryAgainView
+import nl.appical.bookreader.presentation.models.UiBook
 
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
     onLoadContent: () -> Unit,
-    onSearchQueryChanged: (String) -> Unit
+    onSearchQueryChanged: (String) -> Unit,
+    onBookClicked: (UiBook) -> Unit
 ) {
     LaunchedEffect(Unit) { onLoadContent() }
 
@@ -41,7 +43,7 @@ fun HomeScreen(
             contentAlignment = Alignment.Center
         ) {
             when (uiState) {
-                is HomeUiState.Content -> HomeContent(uiState, onSearchQueryChanged)
+                is HomeUiState.Content -> HomeContent(uiState, onSearchQueryChanged, onBookClicked)
                 HomeUiState.Progress -> CircularProgressIndicator()
                 HomeUiState.TryAgain -> TryAgainView { onLoadContent() }
             }
@@ -50,7 +52,11 @@ fun HomeScreen(
 }
 
 @Composable
-private fun HomeContent(uiState: HomeUiState.Content, onSearchQueryChanged: (String) -> Unit) {
+private fun HomeContent(
+    uiState: HomeUiState.Content,
+    onSearchQueryChanged: (String) -> Unit,
+    onBookClicked: (UiBook) -> Unit
+) {
     Column {
         OutlinedTextField(
             modifier = Modifier
@@ -80,7 +86,11 @@ private fun HomeContent(uiState: HomeUiState.Content, onSearchQueryChanged: (Str
                 style = MaterialTheme.typography.bodyLarge
             )
         } else {
-            BooksListView(modifier = Modifier.weight(1f), books = uiState.books)
+            BooksListView(
+                modifier = Modifier.weight(1f),
+                books = uiState.books,
+                onBookClicked = onBookClicked
+            )
         }
     }
 }
@@ -91,5 +101,7 @@ private fun HomeScreenPreview() {
     HomeScreen(
         uiState = HomeUiState.Content(emptyList()),
         onLoadContent = { },
-        onSearchQueryChanged = {})
+        onSearchQueryChanged = {},
+        onBookClicked = {}
+    )
 }

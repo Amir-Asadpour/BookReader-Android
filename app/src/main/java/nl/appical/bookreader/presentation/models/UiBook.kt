@@ -11,4 +11,7 @@ data class UiBook(
     val isFavorite: Boolean
 )
 
+val blankUiBook
+    get() = UiBook("", "", "", "", "", false)
+
 fun Book.toUi() = UiBook(id, title, author, image, description, isFavorite)

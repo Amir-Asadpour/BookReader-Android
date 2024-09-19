@@ -21,6 +21,7 @@ import nl.appical.bookreader.presentation.home.HomeScreen
 import nl.appical.bookreader.presentation.home.HomeViewModel
 import nl.appical.bookreader.presentation.main.components.BottomNavigationBar
 import nl.appical.bookreader.presentation.main.models.BottomNavigationTab
+import nl.appical.bookreader.presentation.models.UiBook
 
 @Serializable
 data object Home
@@ -29,7 +30,7 @@ data object Home
 data object Favorites
 
 @Composable
-fun MainScreen() {
+fun MainScreen(onBookClicked: (UiBook) -> Unit) {
     val navController = rememberNavController()
 
     var selectedTab by remember { mutableStateOf(BottomNavigationTab.Home) }
@@ -69,9 +70,11 @@ fun MainScreen() {
                     HomeScreen(
                         uiState = uiState,
                         onLoadContent = viewModel::getBooks,
-                        onSearchQueryChanged = viewModel::onSearchQueryChanged
+                        onSearchQueryChanged = viewModel::onSearchQueryChanged,
+                        onBookClicked = onBookClicked
                     )
                 }
+
 
                 composable<Favorites> { Text("Fav Screen") }
             }
@@ -82,5 +85,7 @@ fun MainScreen() {
 @Preview
 @Composable
 private fun MainScreenPreview() {
-    MainScreen()
+    MainScreen {
+
+    }
 }

@@ -29,7 +29,11 @@ import nl.appical.bookreader.presentation.models.UiBook
 import nl.appical.bookreader.presentation.models.UiMock
 
 @Composable
-fun BooksListView(modifier: Modifier = Modifier, books: List<UiBook>) {
+fun BooksListView(
+    modifier: Modifier = Modifier,
+    books: List<UiBook>,
+    onBookClicked: (UiBook) -> Unit
+) {
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(vertical = 12.dp, horizontal = 12.dp),
@@ -38,7 +42,7 @@ fun BooksListView(modifier: Modifier = Modifier, books: List<UiBook>) {
         items(books, key = { it.id }) {
             Card(
                 modifier = Modifier.animateItem(),
-                onClick = {},
+                onClick = { onBookClicked(it) },
                 colors = CardDefaults.cardColors(containerColor = Color.Transparent)
             ) {
                 Row(modifier = Modifier.height(IntrinsicSize.Min)) {
@@ -75,6 +79,6 @@ fun BooksListView(modifier: Modifier = Modifier, books: List<UiBook>) {
 @Composable
 private fun BooksListViewPreview() {
     AppTheme {
-        BooksListView(books = UiMock.books)
+        BooksListView(books = UiMock.books, onBookClicked = {})
     }
 }

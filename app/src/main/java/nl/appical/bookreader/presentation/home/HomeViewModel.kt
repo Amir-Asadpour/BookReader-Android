@@ -7,7 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.appical.bookreader.domain.usecases.GetAllBooksUseCase
 import nl.appical.bookreader.presentation.models.toUi
-import nl.appical.bookreader.utils.mapList
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,10 +22,12 @@ class HomeViewModel @Inject constructor(private val getAllBooksUseCase: GetAllBo
         uiState.value = HomeUiState.Progress
 
         viewModelScope.launch {
-            uiState.value = try {
-                HomeUiState.Content(books = getAllBooksUseCase().mapList { it.toUi() })
+            try {
+                getAllBooksUseCase().collect { books ->
+                    uiState.value = HomeUiState.Content(books = books.map { it.toUi() })
+                }
             } catch (e: Exception) {
-                HomeUiState.TryAgain
+                uiState.value = HomeUiState.TryAgain
             }
         }
     }

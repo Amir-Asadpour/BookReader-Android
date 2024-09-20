@@ -6,11 +6,15 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.appical.bookreader.domain.usecases.GetAllBooksUseCase
+import nl.appical.bookreader.domain.usecases.SearchAllBooksUseCase
 import nl.appical.bookreader.presentation.models.toUi
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val getAllBooksUseCase: GetAllBooksUseCase) :
+class HomeViewModel @Inject constructor(
+    private val getAllBooksUseCase: GetAllBooksUseCase,
+    private val searchAllBooksUseCase: SearchAllBooksUseCase
+) :
     ViewModel() {
 
     var uiState = mutableStateOf<HomeUiState>(HomeUiState.Progress)
@@ -23,9 +27,7 @@ class HomeViewModel @Inject constructor(private val getAllBooksUseCase: GetAllBo
 
         viewModelScope.launch {
             try {
-                getAllBooksUseCase().collect { books ->
-                    uiState.value = HomeUiState.Content(books = books.map { it.toUi() })
-                }
+                uiState.value = HomeUiState.Content(books = getAllBooksUseCase().map { it.toUi() })
             } catch (e: Exception) {
                 uiState.value = HomeUiState.TryAgain
             }
@@ -34,6 +36,10 @@ class HomeViewModel @Inject constructor(private val getAllBooksUseCase: GetAllBo
 
     fun onSearchQueryChanged(query: String) {
         if (uiState.value !is HomeUiState.Content) return
-        // TODO: Searching should be implemented
+
+        viewModelScope.launch {
+            uiState.value =
+                HomeUiState.Content(books = searchAllBooksUseCase(query).map { it.toUi() }, query)
+        }
     }
 }

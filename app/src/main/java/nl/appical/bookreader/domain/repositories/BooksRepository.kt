@@ -4,9 +4,9 @@ import kotlinx.coroutines.flow.Flow
 import nl.appical.bookreader.domain.models.Book
 
 interface BooksRepository {
-    suspend fun getBooks(): Flow<List<Book>>
+    suspend fun getBooks(): List<Book>
 
-    fun searchBooks(query: String): Flow<List<Book>>
+    suspend fun searchBooks(query: String): List<Book>
 
     fun getBook(bookId: String): Flow<Book>
 

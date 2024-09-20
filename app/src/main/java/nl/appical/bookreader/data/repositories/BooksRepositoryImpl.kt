@@ -16,18 +16,17 @@ class BooksRepositoryImpl @Inject constructor(
 ) :
     BooksRepository {
 
-    override suspend fun getBooks(): Flow<List<Book>> {
+    override suspend fun getBooks(): List<Book> {
         val favBooksId = bookDao.getAllFavoriteBooksId()
         remoteService.getBooks().map { it.toDomain(favBooksId.contains(it.id)) }.also {
             val dbBooks = it.map { book -> book.toDb() }
             bookDao.insertAll(*dbBooks.toTypedArray())
         }
-        return bookDao.getAllBooks().map { it.map { dbBook -> dbBook.toDomain() } }
+        return bookDao.getAllBooks().map { dbBook -> dbBook.toDomain() }
     }
 
-    override fun searchBooks(query: String): Flow<List<Book>> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun searchBooks(query: String) =
+        bookDao.getAllBooks(query).map { dbBook -> dbBook.toDomain() }
 
     override fun getBook(bookId: String): Flow<Book> =
         bookDao.getBookById(bookId).map { it.toDomain() }

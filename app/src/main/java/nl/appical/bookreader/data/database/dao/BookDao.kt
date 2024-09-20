@@ -10,8 +10,8 @@ import nl.appical.bookreader.data.models.DbBook
 
 @Dao
 interface BookDao {
-    @Query("SELECT * FROM books")
-    fun getAllBooks(): Flow<List<DbBook>>
+    @Query("SELECT * FROM books WHERE (:query = '' OR title LIKE '%' || :query || '%' OR author LIKE '%' || :query || '%')")
+    suspend fun getAllBooks(query: String = ""): List<DbBook>
 
     @Query("SELECT * FROM books WHERE isFavorite=1")
     fun getAllFavoriteBooks(): Flow<List<DbBook>>

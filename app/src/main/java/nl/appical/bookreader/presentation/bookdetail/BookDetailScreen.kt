@@ -1,5 +1,6 @@
 package nl.appical.bookreader.presentation.bookdetail
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -77,9 +78,13 @@ fun BookDetailScreen(book: UiBook, onFavClicked: () -> Unit, onBackClicked: () -
 
             ExtendedFloatingActionButton(
                 onFavClicked,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
             ) {
-                Text(stringResource(if (book.isFavorite) R.string.remote_favorite else R.string.make_favorite))
+                Text(
+                    text = stringResource(if (book.isFavorite) R.string.remote_favorite else R.string.make_favorite),
+                    modifier = Modifier.animateContentSize()
+                )
                 Spacer(Modifier.size(8.dp))
                 Icon(
                     if (book.isFavorite) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,

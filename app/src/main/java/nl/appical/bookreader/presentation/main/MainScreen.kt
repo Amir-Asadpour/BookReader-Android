@@ -1,5 +1,9 @@
 package nl.appical.bookreader.presentation.main
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -63,7 +67,9 @@ fun MainScreen(onBookClicked: (UiBook) -> Unit) {
             NavHost(
                 navController = navController,
                 startDestination = Home,
-                modifier = Modifier.padding(contentPadding)
+                modifier = Modifier.padding(contentPadding),
+                enterTransition = { scaleIn(initialScale = 0.95f) + fadeIn() },
+                exitTransition = { scaleOut(targetScale = 0.95f) + fadeOut() }
             ) {
                 composable<Home> {
                     val viewModel = hiltViewModel<HomeViewModel>()

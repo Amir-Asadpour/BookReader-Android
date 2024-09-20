@@ -4,7 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.IntOffset
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
@@ -33,7 +37,31 @@ class MainActivity : ComponentActivity() {
             AppTheme {
                 val navController = rememberNavController()
 
-                NavHost(navController = navController, startDestination = Main) {
+                NavHost(
+                    navController = navController,
+                    startDestination = Main,
+                    enterTransition = {
+                        slideIn(
+                            animationSpec = spring(stiffness = 200f),
+                            initialOffset = { IntOffset(it.width, 0) }
+                        )
+                    },
+                    exitTransition = {
+                        slideOut(
+                            animationSpec = spring(stiffness = 200f),
+                            targetOffset = { IntOffset(-it.width, 0) })
+                    },
+                    popEnterTransition = {
+                        slideIn(
+                            animationSpec = spring(stiffness = 200f),
+                            initialOffset = { IntOffset(-it.width, 0) })
+                    },
+                    popExitTransition = {
+                        slideOut(
+                            animationSpec = spring(stiffness = 200f),
+                            targetOffset = { IntOffset(it.width, 0) })
+                    }
+                ) {
                     composable<Main> {
                         MainScreen {
                             navController.navigate(BookDetail(it.id))

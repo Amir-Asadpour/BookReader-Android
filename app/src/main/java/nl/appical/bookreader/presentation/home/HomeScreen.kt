@@ -1,5 +1,6 @@
 package nl.appical.bookreader.presentation.home
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,10 +44,12 @@ fun HomeScreen(
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            when (uiState) {
-                is HomeUiState.Content -> HomeContent(uiState, onSearchQueryChanged, onBookClicked)
-                HomeUiState.Progress -> CircularProgressIndicator()
-                HomeUiState.TryAgain -> TryAgainView { onLoadContent() }
+            AnimatedContent(uiState, label = "Home Content", contentAlignment = Alignment.Center) {
+                when (it) {
+                    is HomeUiState.Content -> HomeContent(it, onSearchQueryChanged, onBookClicked)
+                    HomeUiState.Progress -> CircularProgressIndicator()
+                    HomeUiState.TryAgain -> TryAgainView { onLoadContent() }
+                }
             }
         }
     }

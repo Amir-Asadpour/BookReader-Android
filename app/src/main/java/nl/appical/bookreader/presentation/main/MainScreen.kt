@@ -2,7 +2,6 @@ package nl.appical.bookreader.presentation.main
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,12 +10,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.serialization.Serializable
 import nl.appical.bookreader.presentation.designsystem.AppTheme
+import nl.appical.bookreader.presentation.favorite.FavoriteScreen
+import nl.appical.bookreader.presentation.favorite.FavoriteViewModel
 import nl.appical.bookreader.presentation.home.HomeScreen
 import nl.appical.bookreader.presentation.home.HomeViewModel
 import nl.appical.bookreader.presentation.main.components.BottomNavigationBar
@@ -75,8 +77,13 @@ fun MainScreen(onBookClicked: (UiBook) -> Unit) {
                     )
                 }
 
-
-                composable<Favorites> { Text("Fav Screen") }
+                composable<Favorites> {
+                    val viewModel = hiltViewModel<FavoriteViewModel>()
+                    FavoriteScreen(
+                        books = viewModel.books.collectAsStateWithLifecycle(emptyList()).value,
+                        onBookClicked = onBookClicked
+                    )
+                }
             }
         }
     }

@@ -15,3 +15,5 @@ val blankUiBook
     get() = UiBook("", "", "", "", "", false)
 
 fun Book.toUi() = UiBook(id, title, author, image, description, isFavorite)
+
+fun UiBook.toDomain() = Book(id, title, author, image, description, isFavorite)

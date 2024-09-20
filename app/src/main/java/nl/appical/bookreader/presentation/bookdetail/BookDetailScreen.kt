@@ -11,6 +11,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -81,7 +82,7 @@ fun BookDetailScreen(book: UiBook, onFavClicked: () -> Unit, onBackClicked: () -
                 Text(stringResource(if (book.isFavorite) R.string.remote_favorite else R.string.make_favorite))
                 Spacer(Modifier.size(8.dp))
                 Icon(
-                    if (book.isFavorite) Icons.Rounded.FavoriteBorder else Icons.Rounded.FavoriteBorder,
+                    if (book.isFavorite) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
                     contentDescription = "Toggle Favorite"
                 )
             }

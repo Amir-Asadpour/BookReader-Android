@@ -17,12 +17,15 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.MutableStateFlow
 import nl.appical.bookreader.R
 import nl.appical.bookreader.presentation.designsystem.components.TryAgainView
 import nl.appical.bookreader.presentation.models.UiBook
@@ -57,6 +60,8 @@ private fun HomeContent(
     onSearchQueryChanged: (String) -> Unit,
     onBookClicked: (UiBook) -> Unit
 ) {
+    val books by uiState.books.collectAsStateWithLifecycle(emptyList())
+
     Column {
         OutlinedTextField(
             modifier = Modifier
@@ -76,7 +81,7 @@ private fun HomeContent(
             },
             shape = RoundedCornerShape(16.dp)
         )
-        if (uiState.books.isEmpty()) {
+        if (books.isEmpty()) {
             Text(
                 text = stringResource(R.string.msg_no_books_available),
                 modifier = Modifier
@@ -88,7 +93,7 @@ private fun HomeContent(
         } else {
             BooksListView(
                 modifier = Modifier.weight(1f),
-                books = uiState.books,
+                books = books,
                 onBookClicked = onBookClicked
             )
         }
@@ -99,7 +104,7 @@ private fun HomeContent(
 @Composable
 private fun HomeScreenPreview() {
     HomeScreen(
-        uiState = HomeUiState.Content(emptyList()),
+        uiState = HomeUiState.Content(MutableStateFlow(emptyList())),
         onLoadContent = { },
         onSearchQueryChanged = {},
         onBookClicked = {}

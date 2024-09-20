@@ -1,10 +1,14 @@
 package nl.appical.bookreader.data.di
 
+import android.content.Context
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
+import nl.appical.bookreader.data.database.AppDataBase
 import nl.appical.bookreader.data.network.RemoteService
 import nl.appical.bookreader.data.repositories.BooksRepositoryImpl
 import nl.appical.bookreader.domain.repositories.BooksRepository
@@ -30,6 +34,18 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideBooksRepository(remoteService: RemoteService): BooksRepository =
-        BooksRepositoryImpl(remoteService)
+    fun provideBooksRepository(
+        remoteService: RemoteService,
+        appDataBase: AppDataBase
+    ): BooksRepository =
+        BooksRepositoryImpl(remoteService, appDataBase.bookDao())
+
+    @Singleton
+    @Provides
+    fun provideAppDataBase(@ApplicationContext context: Context): AppDataBase {
+        return Room.databaseBuilder(
+            context,
+            AppDataBase::class.java, "book-reader-db"
+        ).build()
+    }
 }

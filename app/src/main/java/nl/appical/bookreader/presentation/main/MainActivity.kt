@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -15,6 +16,7 @@ import kotlinx.serialization.Serializable
 import nl.appical.bookreader.presentation.bookdetail.BookDetailScreen
 import nl.appical.bookreader.presentation.bookdetail.BookDetailViewModel
 import nl.appical.bookreader.presentation.designsystem.AppTheme
+import nl.appical.bookreader.presentation.models.blankUiBook
 
 @Serializable
 data object Main
@@ -40,14 +42,16 @@ class MainActivity : ComponentActivity() {
 
                     composable<BookDetail> { backStackEntry ->
                         val bookId = (backStackEntry.toRoute() as BookDetail).bookId
-                        val viewModel = hiltViewModel<BookDetailViewModel>().apply {
-                            getBook(bookId)
-                        }
-                        val book by viewModel.book
+                        val viewModel =
+                            hiltViewModel<BookDetailViewModel, BookDetailViewModel.Factory> { factory ->
+                                factory.create(bookId)
+                            }
+
+                        val book by viewModel.book.collectAsStateWithLifecycle(blankUiBook)
 
                         BookDetailScreen(
                             book = book,
-                            onFavClicked = {},
+                            onFavClicked = viewModel::toggleBookFavorite,
                             onBackClicked = { navController.popBackStack() }
                         )
                     }

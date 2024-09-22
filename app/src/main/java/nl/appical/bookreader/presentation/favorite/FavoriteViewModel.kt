@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import nl.appical.bookreader.domain.usecases.GetFavoriteBooksUseCase
 import nl.appical.bookreader.presentation.models.toUi
-import nl.appical.bookreader.utils.mapList
+import nl.appical.bookreader.application.common.mapList
 import javax.inject.Inject
 
 @HiltViewModel

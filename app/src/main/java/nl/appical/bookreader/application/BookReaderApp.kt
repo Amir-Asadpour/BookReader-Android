@@ -1,4 +1,4 @@
-package nl.appical.bookreader
+package nl.appical.bookreader.application
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

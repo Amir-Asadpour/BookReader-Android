@@ -8,6 +8,9 @@ The app follows Clean Architecture, though it has been adapted pragmatically to 
 **Data Layer:** Responsible for data handling and persistence using Room.
 **Domain Layer:** Contains the core business logic and use cases. It is entirely independent of other layers.
 **Presentation Layer:** Manages the UI and user interaction, implemented using Jetpack Compose.
+
+For the presentation layer, the MVVM pattern is used with some characteristics of MVI. The layer follows a unidirectional data flow (UDF) approach, which is recommended and praised by Google for improving clarity and separation of responsibilities between components.
+
 While additional components like data sources are commonly used in full-scale Clean Architecture, they were not included in this project for simplicity and pragmatism. The key architectural focus is on ensuring clean separation of concerns and managing dependencies effectively.
 
 ### Dependency Graph

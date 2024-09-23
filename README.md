@@ -35,11 +35,14 @@ Setting up the project is straightforward. Simply clone the repository and open 
 
 Build and run the app as you would with any standard Android project.
 
+## Tests
+Unit tests are included for the ViewModels to ensure their behavior aligns with the app's expected functionality. These tests focus on verifying the logic in the presentation layer.
+
 ## Possible Improvements
 - **CI/CD Setup:** Continuous integration and deployment (CI/CD) were not set up to keep the project within the time limits, but this could be easily implemented. For Android, Github Actions or a similar CI/CD platform could be used.
 - **Modularization:** The current architecture could benefit from splitting the layers into separate modules to further improve scalability and maintainability.
 - **XML Support:** While this project solely uses Compose, switching to XML is simple due to the robust architecture, which decouples the UI from business logic.
-- **Tests:** Although writing unit tests is crucial, they are not present in this project due to time constraints. However, the decoupled layers and the use of a Dependency Injection framework greatly enhance the testability of the codebase. The best place to start writing tests would be from the ViewModels to ensure they behave as expected.
+- **Additional Tests:** While tests for ViewModels have been written, the test coverage can be extended by adding unit tests for use cases and other parts of the app to ensure thorough validation across all layers.
 
 ## Screenshots
 ![Android 1](https://github.com/user-attachments/assets/8f793907-9472-4638-8aca-98e3e38d8f08)

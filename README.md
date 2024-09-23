@@ -5,11 +5,11 @@ This project demonstrates a basic book management app, designed using Clean Arch
 ## Architecture Overview
 The app follows Clean Architecture, though it has been adapted pragmatically to suit the scope of this project. While it may seem like over-engineering for a project of this size, the focus was on maintainability and scalability. The architecture includes three essential layers:
 
-**Data Layer:** Responsible for data handling and persistence using Room.
-**Domain Layer:** Contains the core business logic and use cases. It is entirely independent of other layers.
-**Presentation Layer:** Manages the UI and user interaction, implemented using Jetpack Compose.
+- **Data Layer:** Responsible for data handling and persistence using Room.
+- **Domain Layer:** Contains the core business logic and use cases. It is entirely independent of other layers.
+- **Presentation Layer:** Manages the UI and user interaction, implemented using Jetpack Compose.
 
-For the presentation layer, the MVVM pattern is used with some characteristics of MVI. The layer follows a unidirectional data flow (UDF) approach, which is recommended and praised by Google for improving clarity and separation of responsibilities between components.
+For the presentation layer, the MVVM pattern is used with some characteristics of MVI. The layer follows a unidirectional data flow approach, which is recommended and praised by Google for improving clarity and separation of responsibilities between components.
 
 While additional components like data sources are commonly used in full-scale Clean Architecture, they were not included in this project for simplicity and pragmatism. The key architectural focus is on ensuring clean separation of concerns and managing dependencies effectively.
 
@@ -39,6 +39,7 @@ Build and run the app as you would with any standard Android project.
 - **CI/CD Setup:** Continuous integration and deployment (CI/CD) were not set up to keep the project within the time limits, but this could be easily implemented. For Android, Github Actions or a similar CI/CD platform could be used.
 - **Modularization:** The current architecture could benefit from splitting the layers into separate modules to further improve scalability and maintainability.
 - **XML Support:** While this project solely uses Compose, switching to XML is simple due to the robust architecture, which decouples the UI from business logic.
+- **Tests:** Although writing unit tests is crucial, they are not present in this project due to time constraints. However, the decoupled layers and the use of a Dependency Injection framework greatly enhance the testability of the codebase. The best place to start writing tests would be from the ViewModels to ensure they behave as expected.
 
 ## Screenshots
 ![Android 1](https://github.com/user-attachments/assets/8f793907-9472-4638-8aca-98e3e38d8f08)
